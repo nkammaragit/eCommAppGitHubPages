@@ -37,11 +37,17 @@
             border-radius: 10px;
             background-color: #f9f9f9;
         }
-        #product-list {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
         }
-        .product-item {
-            margin-bottom: 10px;
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
         }
     </style>
 </head>
@@ -49,43 +55,73 @@
     <div class="form-container">
         <h2>Add a New Product</h2>
         <form id="productForm">
-            <label for="productName">Product Name:</label>
-            <select id="productName">
-                <option value="" disabled selected>--Select Product--</option>
-                <option value="laptop">Laptop</option>
-                <option value="phone">Phone</option>
-                <option value="tablet">Tablet</option>
-            </select>
-
-            <label for="price">Price:</label>
-            <select id="price">
-                <option value="" disabled selected>--Select Price--</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-                <option value="1500">1500</option>
-            </select>
-
             <label for="category">Category:</label>
-            <select id="category">
+            <select id="category" onchange="updateProductDropdown()">
                 <option value="" disabled selected>--Select Category--</option>
                 <option value="electronics">Electronics</option>
                 <option value="appliances">Appliances</option>
                 <option value="furniture">Furniture</option>
             </select>
 
+            <label for="productName">Product Name:</label>
+            <select id="productName" disabled>
+                <option value="" disabled selected>--Select Product--</option>
+            </select>
+
+            <label for="price">Price:</label>
+            <select id="price">
+                <option value="" disabled selected>--Select Price--</option>
+                <option value="500">$500</option>
+                <option value="1000">$1000</option>
+                <option value="1500">$1500</option>
+            </select>
+
             <button type="submit">Add Product</button>
         </form>
 
-        <div id="product-list">
-            <h3>Added Products</h3>
-            <!-- Products will be listed here -->
-        </div>
+        <table id="product-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Products will be added here -->
+            </tbody>
+        </table>
     </div>
 
     <script>
-        // Get the form and product list element
+        // Products for each category
+        const products = {
+            electronics: ['Laptop', 'Smartphone', 'Tablet'],
+            appliances: ['Refrigerator', 'Microwave', 'Washing Machine'],
+            furniture: ['Chair', 'Table', 'Sofa']
+        };
+
+        // Update the product dropdown based on selected category
+        function updateProductDropdown() {
+            const category = document.getElementById('category').value;
+            const productNameDropdown = document.getElementById('productName');
+            productNameDropdown.innerHTML = '<option value="" disabled selected>--Select Product--</option>'; // Reset dropdown
+            if (category) {
+                products[category].forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.toLowerCase();
+                    option.textContent = product;
+                    productNameDropdown.appendChild(option);
+                });
+                productNameDropdown.disabled = false; // Enable dropdown after category selection
+            } else {
+                productNameDropdown.disabled = true;
+            }
+        }
+
+        // Get form and table elements
         const productForm = document.getElementById('productForm');
-        const productList = document.getElementById('product-list');
+        const productTableBody = document.querySelector('#product-table tbody');
 
         // Add event listener for form submission
         productForm.addEventListener('submit', function(event) {
@@ -96,17 +132,15 @@
             const price = document.getElementById('price').value;
             const category = document.getElementById('category').value;
 
-            // Create a new div element to display the added product
-            const productItem = document.createElement('div');
-            productItem.classList.add('product-item');
-            productItem.textContent = `Product: ${productName}, Price: ${price}, Category: ${category}`;
+            // Create a new row and insert it into the table
+            const newRow = productTableBody.insertRow();
+            newRow.insertCell(0).textContent = productName.charAt(0).toUpperCase() + productName.slice(1); // Capitalize product name
+            newRow.insertCell(1).textContent = price;
+            newRow.insertCell(2).textContent = category.charAt(0).toUpperCase() + category.slice(1); // Capitalize category
 
-            // Add the new product to the product list
-            productList.appendChild(productItem);
-
-            // Optionally, clear the form fields after submission
+            // Clear the form for the next product entry
             productForm.reset();
+            document.getElementById('productName').disabled = true;
         });
     </script>
-</body>
-</html>
+</
