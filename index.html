@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple eCommerce Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input[type="text"] {
+            width: 300px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add a New Product</h2>
+        <form action="#">
+            <label for="productName">Product Name:</label>
+            <select id="productName">
+                <option value="" disabled selected>--Select Product--</option>
+                <option value="laptop">Laptop</option>
+                <option value="phone">Phone</option>
+                <option value="tablet">Tablet</option>
+            </select>
+
+            <label for="price">Price:</label>
+            <input type="text" id="price" placeholder="Enter Price">
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" placeholder="Enter Category">
+
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+</body>
+</html>
