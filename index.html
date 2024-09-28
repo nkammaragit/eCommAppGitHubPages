@@ -37,12 +37,18 @@
             border-radius: 10px;
             background-color: #f9f9f9;
         }
+        #product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h2>Add a New Product</h2>
-        <form action="#">
+        <form id="productForm">
             <label for="productName">Product Name:</label>
             <select id="productName">
                 <option value="" disabled selected>--Select Product--</option>
@@ -52,13 +58,55 @@
             </select>
 
             <label for="price">Price:</label>
-            <input type="text" id="price" placeholder="Enter Price">
+            <select id="price">
+                <option value="" disabled selected>--Select Price--</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="1500">1500</option>
+            </select>
 
             <label for="category">Category:</label>
-            <input type="text" id="category" placeholder="Enter Category">
+            <select id="category">
+                <option value="" disabled selected>--Select Category--</option>
+                <option value="electronics">Electronics</option>
+                <option value="appliances">Appliances</option>
+                <option value="furniture">Furniture</option>
+            </select>
 
             <button type="submit">Add Product</button>
         </form>
+
+        <div id="product-list">
+            <h3>Added Products</h3>
+            <!-- Products will be listed here -->
+        </div>
     </div>
+
+    <script>
+        // Get the form and product list element
+        const productForm = document.getElementById('productForm');
+        const productList = document.getElementById('product-list');
+
+        // Add event listener for form submission
+        productForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from refreshing the page
+
+            // Get values from the form
+            const productName = document.getElementById('productName').value;
+            const price = document.getElementById('price').value;
+            const category = document.getElementById('category').value;
+
+            // Create a new div element to display the added product
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+            productItem.textContent = `Product: ${productName}, Price: ${price}, Category: ${category}`;
+
+            // Add the new product to the product list
+            productList.appendChild(productItem);
+
+            // Optionally, clear the form fields after submission
+            productForm.reset();
+        });
+    </script>
 </body>
 </html>
